@@ -51,6 +51,10 @@ else
     suseRemoveService grub_config
 fi
 
+if [[ ${kiwi_type} =~ vmx ]];then
+    suseInsertService cloud-init
+fi
+
 #======================================
 # Setup default target, multi-user
 #--------------------------------------

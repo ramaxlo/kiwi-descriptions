@@ -14,7 +14,7 @@
         <packagemanager>zypper</packagemanager>
         <locale>en_US</locale>
         <keytable>us</keytable>
-        <timezone>Europe/Berlin</timezone>
+        <timezone>UTC</timezone>
         <rpm-excludedocs>true</rpm-excludedocs>
         <rpm-check-signatures>false</rpm-check-signatures>
         <bootsplash-theme>openSUSE</bootsplash-theme>
@@ -22,7 +22,10 @@
     </preferences>
     <preferences>
         <type image="pxe" filesystem="squashfs" boot="netboot/suse-leap42.3"/>
-        <type image="vmx" filesystem="ext4" bootloader="grub2" kernelcmdline="splash" firmware="efi"/>
+        <type image="vmx" filesystem="ext4" bootloader="grub2" kernelcmdline="console=xvc0 multipath=off net.ifnames=0" boottimeout="1" devicepersistency="by-label" firmware="ec2">
+            <size unit="M">10240</size>
+            <machine xen_loader="hvmloader"/>
+        </type>
         <type image="oem" filesystem="ext4" initrd_system="dracut" installiso="true" bootloader="grub2" kernelcmdline="splash" firmware="efi">
             <oemconfig>
                 <oem-systemsize>2048</oem-systemsize>
@@ -43,6 +46,15 @@
     </repository>
     <repository type="rpm-md" alias="Leap_42_3" imageinclude="true">
         <source path="obs://openSUSE:Leap:42.3/standard"/>
+    </repository>
+    <repository type="rpm-md" alias="repo-non-oss" imageinclude="true">
+        <source path="obs://openSUSE:Leap:42.3:NonFree/standard"/>
+    </repository>
+    <repository type="rpm-md" alias="repo-update" imageinclude="true">
+        <source path="obs://openSUSE:Leap:42.3:Update/standard"/>
+    </repository>
+    <repository type="rpm-md" alias="repo-update-non-oss" imageinclude="true">
+        <source path="obs://openSUSE:Leap:42.3:NonFree:Update/standard"/>
     </repository>
     <packages type="image">
         <package name="checkmedia"/>
@@ -72,6 +84,12 @@
         <package name="shim"/>
         <package name="kernel-default"/>
         <package name="timezone"/>
+        <package name="aws-cli"/>
+        <package name="grub2-x86_64-xen"/>
+        <package name="xen-libs"/>
+        <package name="xen-tools-domU"/>
+        <package name="cloud-init"/>
+        <package name="ntp"/>
     </packages>
     <packages type="iso">
         <package name="gfxboot-branding-openSUSE"/>
